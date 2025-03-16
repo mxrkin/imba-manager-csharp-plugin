@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using CounterStrikeSharp.API.Core;
 
-public class ImbaManagerPlugin : Plugin
+namespace ImbaManagerPlugin
+public class ImbaManagerPlugin : BasePlugin
 {
     private string prefix = "[IMBA]";
     private Dictionary<string, string> pendingNames = new Dictionary<string, string>();
