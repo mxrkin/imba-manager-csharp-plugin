@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using CounterStrikeSharp.API.Core;
-using CounterStrikeSharp.API.Events;
 
 public class ImbaManagerPlugin : Plugin
 {
