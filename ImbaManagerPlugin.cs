@@ -1,69 +1,43 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Core.Attributes.Registration;
+using CounterStrikeSharp.API.Modules.Commands;
+using CounterStrikeSharp.API.Modules.Utils;
 
-namespace ImbaManagerPlugin
+namespace ImbaManagerPlugin;
 public class ImbaManagerPlugin : BasePlugin
 {
     private string prefix = "[IMBA]";
     private Dictionary<string, string> pendingNames = new Dictionary<string, string>();
 
-    public override void OnEnable()
-    {
-        RegisterCommand("imba_prefix", OnSetPrefix);
-        RegisterCommand("imba_say", OnSayMessage);
-        RegisterCommand("imba_set_name", OnSetName);
-        Game.OnPlayerConnect += OnPlayerConnect;
-    }
+    public override string ModuleName => "ImbaManagerPlugin";
+    public override string ModuleVersion => "1.0.0";
+    public override string ModuleAuthor => "barracode";
+    public override string ModuleDescription => "ImbaManagerPlugin";
 
-    private void OnSetPrefix(string[] args)
-    {
-        if (args.Length < 1)
-        {
-            Console.WriteLine("Usage: imba_prefix [prefix]");
-            return;
-        }
-        prefix = args[0];
-        Console.WriteLine($"Prefix set to: {prefix}");
-    }
-
-    private void OnSayMessage(string[] args)
-    {
-        if (args.Length < 1)
-        {
-            Console.WriteLine("Usage: imba_say [text]");
-            return;
-        }
-        string message = string.Join(" ", args);
-        Game.Say($"{prefix} {message}");
-    }
-
-    private void OnSetName(string[] args)
-    {
-        if (args.Length < 2)
-        {
-            Console.WriteLine("Usage: imba_set_name [steamid32] [name]");
-            return;
-        }
-        string steamId = args[0];
-        string name = args[1];
-        var player = Game.GetPlayerBySteamId(steamId);
-        if (player != null)
-        {
-            player.Name = name;
-        }
-        else
-        {
-            pendingNames[steamId] = name;
+    void PrintToAll(string message) {
+        foreach (var player in Utilities.GetPlayers().Where(x => x.IsValid)) {
+            player.PrintToChat($"{ChatColors.Green}{prefix} {ChatColors.Default}{message}");
         }
     }
 
-    private void OnPlayerConnect(Player player)
-    {
-        if (pendingNames.TryGetValue(player.SteamId, out string name))
-        {
-            player.Name = name;
-            pendingNames.Remove(player.SteamId);
-        }
+    [ConsoleCommand("imba_say", "Say a message to all players")]
+    [CommandHelper(minArgs: 1, usage: "[text]", whoCanExecute: CommandUsage.SERVER_ONLY)]
+    public void OnCommandReplySayToAll(CCSPlayerController? player, CommandInfo command) {
+        var text = command.GetArg(1);
+
+        PrintToAll(text);
+    }
+
+    [ConsoleCommand("imba_set_prefix", "Set the prefix for the plugin")]
+    [CommandHelper(minArgs: 1, usage: "[prefix]", whoCanExecute: CommandUsage.SERVER_ONLY)]
+    public void OnCommandReplySetPrefix(CCSPlayerController? player, CommandInfo command) {
+        var text = command.GetArg(1);
+
+        prefix = text;
+        command.ReplyToCommand($"Prefix set to {text}");
     }
 }
