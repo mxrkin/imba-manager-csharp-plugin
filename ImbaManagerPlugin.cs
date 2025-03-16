@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
@@ -11,7 +9,7 @@ namespace ImbaManagerPlugin;
 public class ImbaManagerPlugin : BasePlugin
 {
     private string prefix = "[IMBA]";
-    private Dictionary<string, string> pendingNames = new Dictionary<string, string>();
+    // private Dictionary<string, string> pendingNames = new Dictionary<string, string>();
 
     public override string ModuleName => "ImbaManagerPlugin";
     public override string ModuleVersion => "1.0.0";
