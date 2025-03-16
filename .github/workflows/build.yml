@@ -24,13 +24,10 @@ jobs:
     - name: Build
       run: |
         mkdir -p ./build/addons/sourcemode/plugins/ImbaManagerPlugin
-        dotnet publish imba-manager-csharp-plugin.sln -c Release -o ./build/addons/sourcemode/plugins/ImbaManagerPlugin
-    
-    - name: Archive
-      run: tar -czvf /tmp/ImbaManagerPlugin.tar.gz ./build
+        dotnet publish imba-manager-csharp-plugin.sln -c Release -o ./build/addons/counterstrikesharp/plugins/ImbaManagerPlugin
     
     - name: Archive build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: cs2-imba-manager-plugin
-        path: /tmp/ImbaManagerPlugin.tar.gz
+        path: ./build
