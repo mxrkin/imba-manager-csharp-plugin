@@ -12,7 +12,7 @@ public class ImbaManagerPlugin : BasePlugin
     // private Dictionary<string, string> pendingNames = new Dictionary<string, string>();
 
     public override string ModuleName => "ImbaManagerPlugin";
-    public override string ModuleVersion => "1.0.0";
+    public override string ModuleVersion => "0.0.2";
     public override string ModuleAuthor => "barracode";
     public override string ModuleDescription => "ImbaManagerPlugin";
 
