@@ -8,7 +8,7 @@ using CounterStrikeSharp.API.Modules.Utils;
 namespace ImbaManagerPlugin;
 public class ImbaManagerPlugin : BasePlugin
 {
-    private string prefix = "[IMBA]";
+    private string prefix = "IMBAv1";
     // private Dictionary<string, string> pendingNames = new Dictionary<string, string>();
 
     public override string ModuleName => "ImbaManagerPlugin";
@@ -18,7 +18,7 @@ public class ImbaManagerPlugin : BasePlugin
 
     void PrintToAll(string message) {
         foreach (var player in Utilities.GetPlayers().Where(x => x.IsValid)) {
-            player.PrintToChat($"{ChatColors.Green}{prefix} {ChatColors.Default}{message}");
+            player.PrintToChat($"{ChatColors.Green}[{prefix}] {ChatColors.Default}{message}");
         }
     }
 
