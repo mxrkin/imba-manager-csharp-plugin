@@ -46,19 +46,15 @@ public class ImbaManagerPlugin : BasePlugin
     }
 
     [GameEventHandler]
-public HookResult OnPlayerConnect(EventPlayerConnect @event, GameEventInfo info)
-{
-    // Userid will give you a reference to a CCSPlayerController class.
-    // Before accessing any of its fields, you must first check if the Userid
-    // handle is actually valid, otherwise you may run into runtime exceptions.
-    // See the documentation section on Referencing Players for details.
-    if (@event.Userid.IsValid) {
-        if (pendingNames.ContainsKey(@event.Userid.SteamID)) {
-            var name = pendingNames[@event.Userid.SteamID];
-            @event.Userid.PlayerName = name;
+    public HookResult OnPlayerSpawned(EventPlayerSpawned @event, GameEventInfo info)
+    {
+        if (@event.Userid?.IsValid == true) {
+            if (pendingNames.ContainsKey(@event.Userid.SteamID)) {
+                var name = pendingNames[@event.Userid.SteamID];
+                @event.Userid.PlayerName = name;
+            }
         }
-    }
 
-    return HookResult.Continue;
-}
+        return HookResult.Continue;
+    }
 }
