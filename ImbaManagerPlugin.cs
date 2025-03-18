@@ -5,6 +5,7 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Attributes.Registration;
 using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Utils;
+using Microsoft.Extensions.Logging;
 
 #nullable enable
 
@@ -48,6 +49,8 @@ public class ImbaManagerPlugin : BasePlugin
     [GameEventHandler]
     public HookResult OnPlayerSpawned(EventPlayerSpawned @event, GameEventInfo info)
     {
+        Logger.LogInformation("IMBA CONNECT");
+        Logger.LogInformation(@event.Userid?.SteamID.ToString());
         if (@event.Userid?.IsValid == true) {
             if (pendingNames.ContainsKey(@event.Userid.SteamID)) {
                 var name = pendingNames[@event.Userid.SteamID];
