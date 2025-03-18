@@ -47,7 +47,7 @@ public class ImbaManagerPlugin : BasePlugin
     }
 
     [GameEventHandler]
-    public HookResult OnPlayerSpawned(EventPlayerSpawned @event, GameEventInfo info)
+    public HookResult OnPlayerConnectFull(EventPlayerConnectFull @event, GameEventInfo info)
     {
         Logger.LogInformation("IMBA CONNECT");
         Logger.LogInformation(@event.Userid?.SteamID.ToString());
